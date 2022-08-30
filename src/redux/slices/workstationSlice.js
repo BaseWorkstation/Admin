@@ -22,11 +22,13 @@ export const fetchWorkstation = createAsyncThunk(
   }
 );
 
-export const fetchWorkstationActivities = createAsyncThunk(
-  "workstations/fetchWorkstationActivities",
+export const fetchGeneralStats = createAsyncThunk(
+  "workstations/fetchGeneralStats",
   async (fetchPayload, thunkAPI) => {
     try {
-      const { data } = await Axios.get(`${BASE_API_URL}/visits/`, {
+      const {
+        data: { data },
+      } = await Axios.get(`${BASE_API_URL}/stat/general`, {
         params: fetchPayload,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("base_acccess_token")}`,
@@ -217,7 +219,7 @@ const workstationSlice = createSlice({
   name: "workstations",
   initialState: {
     workstation: null,
-    workstationActivities: { data: [] },
+    generalStats: null,
     workstationMembers: { data: [], unregistered_members: [] },
     loading: "FETCH_WORKSTATION",
     error: "",
@@ -251,21 +253,21 @@ const workstationSlice = createSlice({
       delete state.loading;
     },
 
-    [fetchWorkstationActivities.pending]: (state) => {
-      state.workstationActivities = { data: [] };
+    [fetchGeneralStats.pending]: (state) => {
+      state.generalStats = null;
       delete state.error;
       delete state.success;
-      state.loading = "FETCH_WORKSTATION_ACTIVITIES";
+      state.loading = "FETCH_GENERAL_STATS";
     },
-    [fetchWorkstationActivities.fulfilled]: (state, action) => {
-      state.success = "FETCH_WORKSTATION_ACTIVITIES";
-      state.workstationActivities = action.payload;
+    [fetchGeneralStats.fulfilled]: (state, action) => {
+      state.success = "FETCH_GENERAL_STATS";
+      state.generalStats = action.payload;
       delete state.loading;
       delete state.error;
     },
-    [fetchWorkstationActivities.rejected]: (state, { payload }) => {
+    [fetchGeneralStats.rejected]: (state, { payload }) => {
       state.error = {
-        errorType: "FETCH_WORKSTATION_ACTIVITIES",
+        errorType: "FETCH_GENERAL_STATS",
         errorMessage: payload?.error,
       };
       delete state.loading;

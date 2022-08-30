@@ -53,22 +53,6 @@ export default function DesktopAccountNav() {
         </Stack>
 
         <Stack spacing={8}>
-          <Link href="/account/support">
-            <HStack cursor="pointer" spacing={6}>
-              <Icon
-                fontSize={22}
-                as={onSupportPath ? IoHeadsetSharp : IoHeadsetOutline}
-                color={onSupportPath ? "primary.500" : "blue.800"}
-              />
-              <Text
-                color={onSupportPath ? "primary.500" : "blue.800"}
-                fontWeight={onSupportPath ? 500 : 400}
-              >
-                Support
-              </Text>
-            </HStack>
-          </Link>
-
           <HStack
             onClick={() => Router.push("/login")}
             cursor="pointer"
