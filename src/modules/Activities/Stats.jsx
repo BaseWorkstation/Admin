@@ -8,6 +8,7 @@ import {
   Menu,
   MenuButton,
   MenuList,
+  Select,
   Stack,
   Tab,
   TabList,
@@ -34,8 +35,11 @@ export default function Stats() {
     setStartDay,
     endDay,
     setEndDay,
+    workstationId,
+    setWorkstationId,
     statsLoading,
     generalStats,
+    workstations,
   } = useStatsHook();
 
   return (
@@ -48,7 +52,21 @@ export default function Stats() {
         minH="lg"
         p={[5, 5, 8]}
       >
-        <Box pos="relative">
+        <HStack pos="relative">
+          <Flex>
+            <Select
+              value={workstationId}
+              onChange={(event) => setWorkstationId(event.target.value)}
+              variant="filled"
+              placeholder="Choose Workstation"
+            >
+              {workstations.map(({ id, name }) => (
+                <option key={id} value={id}>
+                  {name}
+                </option>
+              ))}
+            </Select>
+          </Flex>
           <HStack
             pos="absolute"
             spacing={2}
@@ -118,9 +136,13 @@ export default function Stats() {
               )}
             </Menu>
           </HStack>
-        </Box>
+        </HStack>
 
-        <GeneralStats stats={generalStats} statsLoading={statsLoading} />
+        <GeneralStats
+          stats={generalStats}
+          statsLoading={statsLoading}
+          workstationId={workstationId}
+        />
       </Stack>
     </AccountLayout>
   );

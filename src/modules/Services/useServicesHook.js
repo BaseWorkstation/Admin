@@ -6,7 +6,7 @@ import {
   fetchServices,
   uploadServiceImage,
 } from "redux/slices/serviceSlice";
-import { fetchWorkstation } from "redux/slices/workstationSlice";
+import { fetchWorkstations } from "redux/slices/workstationSlice";
 import { toastError, toastSuccess } from "utils/helpers";
 
 export default function useServicesHook() {
@@ -20,7 +20,7 @@ export default function useServicesHook() {
 
   useEffect(() => {
     if (!workstation) {
-      dispatch(fetchWorkstation({ id: currentWorkspaceId }));
+      dispatch(fetchWorkstations({ id: currentWorkspaceId }));
     }
     dispatch(fetchServices({ workstation_id: currentWorkspaceId }));
   }, []);

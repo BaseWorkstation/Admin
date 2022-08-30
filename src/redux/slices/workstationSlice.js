@@ -2,13 +2,13 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Axios from "axios";
 import { BASE_API_URL } from "utils/constants";
 
-export const fetchWorkstation = createAsyncThunk(
-  "workstations/fetchWorkstation",
+export const fetchWorkstations = createAsyncThunk(
+  "workstations/fetchWorkstations",
   async (fetchPayload, thunkAPI) => {
     try {
       const {
         data: { data },
-      } = await Axios.get(`${BASE_API_URL}/workstations/${fetchPayload?.id}`, {
+      } = await Axios.get(`${BASE_API_URL}/workstations`, {
         params: fetchPayload,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("base_acccess_token")}`,
@@ -218,7 +218,7 @@ export const deleteWorkstationMember = createAsyncThunk(
 const workstationSlice = createSlice({
   name: "workstations",
   initialState: {
-    workstation: null,
+    workstations: [],
     generalStats: null,
     workstationMembers: { data: [], unregistered_members: [] },
     loading: "FETCH_WORKSTATION",
@@ -233,19 +233,19 @@ const workstationSlice = createSlice({
     },
   },
   extraReducers: {
-    [fetchWorkstation.pending]: (state) => {
-      state.workstation = null;
+    [fetchWorkstations.pending]: (state) => {
+      state.workstations = [];
       delete state.error;
       delete state.success;
       state.loading = "FETCH_WORKSTATION";
     },
-    [fetchWorkstation.fulfilled]: (state, action) => {
+    [fetchWorkstations.fulfilled]: (state, action) => {
       state.success = "FETCH_WORKSTATION";
-      state.workstation = action.payload;
+      state.workstations = action.payload;
       delete state.loading;
       delete state.error;
     },
-    [fetchWorkstation.rejected]: (state, { payload }) => {
+    [fetchWorkstations.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "FETCH_WORKSTATION",
         errorMessage: payload?.error,

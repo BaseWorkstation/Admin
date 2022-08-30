@@ -22,7 +22,7 @@ import Moment from "react-moment";
 import { separateWithComma } from "utils/helpers";
 import "moment-timezone";
 
-export default function GeneralStats({ statsLoading, stats }) {
+export default function GeneralStats({ statsLoading, stats, workstationId }) {
   if (statsLoading)
     return (
       <HStack pt={4} justify="center">
@@ -42,6 +42,7 @@ export default function GeneralStats({ statsLoading, stats }) {
     <Stack spacing={8} pt={4}>
       <Stack pt={8} direction={["column", "column", "row"]}>
         {stats &&
+          !workstationId &&
           totalCounts.map(({ name, value }) => (
             <Stack
               border="1px solid"

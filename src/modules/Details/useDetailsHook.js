@@ -4,7 +4,7 @@ import { toastError, toastSuccess } from "utils/helpers";
 import {
   createWorkstation,
   editWorkstation,
-  fetchWorkstation,
+  fetchWorkstations,
   uploadWorkstationImage,
   uploadWorkstationLogo,
 } from "redux/slices/workstationSlice";
@@ -26,7 +26,7 @@ export default function useDetailsHook() {
 
       if (!data) {
         const { payload, error } = await dispatch(
-          fetchWorkstation({ id: currentWorkspaceId })
+          fetchWorkstations({ id: currentWorkspaceId })
         );
 
         data = payload;
