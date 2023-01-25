@@ -36,8 +36,6 @@ export default function GeneralStats({ statsLoading, stats, workstationId }) {
     { name: "All Users", value: stats?.users?.registered },
   ];
 
-  console.log(totalCounts);
-
   return (
     <Stack spacing={8} pt={4}>
       <Stack pt={8} direction={["column", "column", "row"]}>
@@ -57,7 +55,7 @@ export default function GeneralStats({ statsLoading, stats, workstationId }) {
             >
               <Text color="gray.500">{name}</Text>
               <HStack justify="space-between">
-                <Heading fontSize="5xl">{value.all}</Heading>
+                <Heading fontSize="5xl">{value?.all}</Heading>
               </HStack>
             </Stack>
           ))}
